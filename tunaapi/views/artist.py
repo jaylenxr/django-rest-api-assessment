@@ -54,12 +54,13 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class SingleArtistSerializer(serializers.ModelSerializer):
     songs = serializers.SerializerMethodField()
-
+    #the SerializerMethodField creates a new logic that will loopup the get_songs method to show songs by the artist requested.
+    #this field (songs) doesn't exist within the Artist model so it has to be created dynamically
     class Meta:
         model = Artist
         fields = ('id', 'name', 'age', 'bio', 'songs')
 
     def get_songs(self, obj):
-        # Get all songs by this artist
+        # get all songs by this artist
         songs = Song.objects.filter(artist=obj)
         return [{"id": song.id, "title": song.title, "album": song.album, "length": song.length} for song in songs]
