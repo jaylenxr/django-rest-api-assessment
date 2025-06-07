@@ -39,7 +39,9 @@ class ArtistView(ViewSet):
         artist.age = request.data["age"]
         artist.bio = request.data["bio"]
         artist.save()
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        serializer = ArtistSerializer(artist)
+        return Response(serializer.data)
 
     # DELETE REQUEST TO DESTROY ARTIST
     def destroy(self, request, pk):
@@ -53,12 +55,16 @@ class ArtistSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'age', 'bio')
 
 class SingleArtistSerializer(serializers.ModelSerializer):
+    song_count = serializers.SerializerMethodField()
     songs = serializers.SerializerMethodField()
-    #the SerializerMethodField creates a new logic that will loopup the get_songs method to show songs by the artist requested.
+    #the SerializerMethodField creates a new logic that will look up the get_songs method to show songs by the artist requested.
     #this field (songs) doesn't exist within the Artist model so it has to be created dynamically
     class Meta:
         model = Artist
-        fields = ('id', 'name', 'age', 'bio', 'songs')
+        fields = ('id', 'name', 'age', 'bio', 'song_count', 'songs')
+
+    def get_song_count(self, obj):
+        return Song.objects.filter(artist=obj).count()
 
     def get_songs(self, obj):
         # get all songs by this artist

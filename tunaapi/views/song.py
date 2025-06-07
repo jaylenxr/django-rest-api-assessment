@@ -44,7 +44,8 @@ class SongView(ViewSet):
         song.artist = artist
         song.save()
 
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        serializer = SongSerializer(song)
+        return Response(serializer.data)
 
     # DELETE REQUEST TO DESTROY SONG
     def destroy(self, request, pk):
@@ -54,9 +55,10 @@ class SongView(ViewSet):
 
 class SongSerializer(serializers.ModelSerializer):
     artist_name = serializers.CharField(source='artist.name', read_only=True)
+    artist_id = serializers.IntegerField(source='artist.id', read_only=True)
     class Meta:
         model = Song
-        fields = ('id', 'title', 'artist_name', 'album', 'length')
+        fields = ('id', 'title', 'artist_name', 'artist_id', 'album', 'length')
 
 class SingleSongSerializer(serializers.ModelSerializer):
     artist = serializers.SerializerMethodField()

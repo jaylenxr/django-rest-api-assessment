@@ -31,7 +31,9 @@ class GenreView(ViewSet):
         genre = Genre.objects.get(pk=pk)
         genre.description = request.data["description"]
         genre.save()
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        serializer = GenreSerializer(genre)
+        return Response(serializer.data)
 
     # DELETE REQUEST TO DESTROY GENRE
     def destroy(self, request, pk):
@@ -54,4 +56,4 @@ class SingleGenreSerializer(serializers.ModelSerializer):
 
     def get_songs(self, obj):
         songs = Song.objects.filter(songgenre__genre=obj)
-        return [{"id": song.id, "title": song.title, "artist": song.artist.name} for song in songs]
+        return [{"id": song.id, "title": song.title, "artist_id": song.artist.id,"album": song.album, "length": song.length} for song in songs]
