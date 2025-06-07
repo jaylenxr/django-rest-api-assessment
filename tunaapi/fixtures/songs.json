@@ -1,0 +1,22 @@
+[
+  {
+    "model": "tunaapi.song",
+    "pk": 1,
+    "fields": {
+      "title": "Diamonds",
+      "artist_id": 1,
+      "album": "Anti",
+      "length": 180
+    }
+  },
+  {
+    "model": "tunaapi.song",
+    "pk": 2,
+    "fields": {
+      "title": "Rise",
+      "artist_id": 2,
+      "album": "Seat at the Table",
+      "length": 110
+    }
+  }
+]
