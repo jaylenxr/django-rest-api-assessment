@@ -1,0 +1,20 @@
+[
+  {
+      "model": "tunaapi.artist",
+      "pk": 1,
+      "fields": {
+          "name": "Rihanna",
+          "age": 23,
+          "bio": "Shine bright like a diamond!"
+      }
+    },
+  {
+      "model": "tunaapi.artist",
+      "pk": 2,
+      "fields": {
+          "name": "Solange",
+          "age": 27,
+          "bio": "Fall in your ways, so you can't crumble."
+      }
+    }
+  ]
